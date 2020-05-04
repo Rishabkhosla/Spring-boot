@@ -7,11 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
+
 public class CustomerController {
 
     @Autowired
@@ -28,6 +28,14 @@ public class CustomerController {
     }
 
 
+   @GetMapping("/get_cust/{country}")
+   public List<Customer> get(@PathVariable String country) {
+       return  service.getString(country);
+   }
+
+
+
+
     @GetMapping("/get_customer/{id}")
     public ResponseEntity<Customer> get(@PathVariable Integer id) {
         try {
@@ -38,24 +46,31 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/Customers")
-    public void add(@RequestBody Customer customer) {
-        service.save(customer);
+
+    @PostMapping("/posting")
+    public void add(@RequestBody List<Customer> customer) {
+       service.save(customer);
+    }
+//
+
+    @PutMapping("/Customers")
+
+    public ResponseEntity<Customer> update(@RequestBody  List<Customer> customer) {
+        try {
+              for (Customer c : customer) {
+                    service.delete(c.getCust_id());{
+
+                    service.save(customer);
+                }
+                return new ResponseEntity<Customer>(c, HttpStatus.OK);
+            }
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+        }
+
+        return null;
     }
 
-    @PutMapping("/Customers/{id}")
-    public Customer customer(@PathVariable(value = "id") Integer id,
-                           @Valid @RequestBody Customer cust) {
-
-        Customer custt = service.get(id);
-        custt.setCust_id(cust.getCust_id());
-        custt.setName(cust.getName());
-        custt.setQuantity(cust.getQuantity());
-        custt.setCountry(cust.getCountry());
-
-        Customer updatedNote = service.save(custt);
-        return updatedNote;
-    }
 
     @DeleteMapping("/delete_customer/{id}")
     public void delete(@PathVariable Integer id) {

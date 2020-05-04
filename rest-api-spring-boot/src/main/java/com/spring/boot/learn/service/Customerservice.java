@@ -19,14 +19,27 @@ public class Customerservice {
         return repo.findAll();
     }
 
-    public Customer save(Customer cust) {
-        repo.save(cust);
-        return cust;
+
+    public List<Customer> save(List<Customer> cust) {
+
+       return repo.saveAll(cust);
+//        return list;
+    }
+
+    public Customer saveupdate(Customer cust) {
+
+        return repo.save(cust);
+//        return list;
     }
 
     public Customer get(Integer id) {
         return repo.findById(id).get();
     }
+
+    public List<Customer> getString(String country) {
+        return repo.findByCountry(country);
+    }
+
 
     public void delete(Integer id) {
         repo.deleteById(id);
@@ -38,5 +51,15 @@ public class Customerservice {
     }
 
 
+//    public List<Customer> get_cust(){
+//
+//        return  repo.findProjects();
+//    }
+
+
+
     }
+
+
+
 

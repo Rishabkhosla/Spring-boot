@@ -30,10 +30,16 @@ public class Customer {
         this.country = country;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//   @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//
 
+   @Id
     public Integer getCust_id() {
         return cust_id;
+    }
+
+    public String getCountry() {
+        return country;
     }
 }
