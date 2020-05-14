@@ -57,7 +57,7 @@ export default class FirstPage extends Component {
             placeholderTextColor="black"
             autoCapitalize="none"
             secureTextEntry={true}
-             onChangeText={this.handlePassword}
+            onChangeText={this.handlePassword}
           />
           <TouchableOpacity
             style={styles.submitButton}
@@ -69,36 +69,25 @@ export default class FirstPage extends Component {
                                             },
                                             body: JSON.stringify({
                                               username: this.state.Username,
-                                              passwd: this.state.password
+                                              passwd: this.state.password,
                                             })
                                           })
 
-                                          .then(function(response) {
-                                                        return response.json();
-                                                    })
-                                                    .then(function(myJson) {
-                                                        navigate('SecondPage');
-                                                        console.log(myJson);
+                                        .then((response) => {
+                                                 return response.text();
+                                                 console.log(this.state.Username);
+                                              })
+                                           .then((responseJson) => {
+                                                                if(responseJson==='"NOT_FOUND"'){
+                                                                alert("wrong username and password");}
+                                                                else{
+                                                                console.log(this.state.password);
+                                                                console.log(this.state.Username);
+                                                                navigate('SecondPage');;}
+                                                             }).catch((error) => console.error(error))
 
- //                                         .then((response) => response.json())
- ////                                         .then((res) => {
- //                                           //If response is in json then in success
- //                                            .then((res) => {
- ////                                                           if(
- //                                                              console.log('res',res);
- //                                                              return res;
- ////                                                           )
 
- //                                                               console.log("hii");
- //                                                               var username=res.message;
- //                                                               AsyncStorage.setItem('username',username);
- //                                                               this.props.navigator('SecondScreen')
-
- //                                                           else{
- //                                                               alert("bad");
- //                                                           }
-                                                        })
-                                          .catch((error) => console.error(error))}
+                                          }
           >
             <Text style={styles.submitButtonText}> Submit </Text>
           </TouchableOpacity>
